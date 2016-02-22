@@ -26,6 +26,7 @@ public class PowerUp : Physics2DBody {
 				player.Mass += amount / 2f;
 				break;
 		}
+		player.SetNewColor(GetComponent<SpriteRenderer>().color);
 		this.collider2d.enabled = false;
 		this.GetComponent<SpriteRenderer>().enabled = false;
 		GetComponent<AudioSource>().Play();

@@ -6,6 +6,11 @@ public class Player : Physics2DBody {
 	float speed = 4f;
 	float boostSpeed = 4f;
 
+	Color[] colors;
+	int colorIndex;
+	int setColorIndex;
+	Timer colorTimer;
+
 	string[] inputStrings = {"w", "a", "s", "d"};
 	bool[] inputs;
 
@@ -14,9 +19,22 @@ public class Player : Physics2DBody {
 	protected override void Awake () {
 		inputs = new bool[inputStrings.Length];
 		disabled = false;
+
+		colors = new Color[10];
+		for (int i = 0; i < colors.Length; i++) {
+			colors[i] = GetComponent<SpriteRenderer>().color;
+		}
+		colorIndex = 0;
+		setColorIndex = 0;
+		colorTimer = new Timer(0.1f);
+
 		base.Awake();
 	}
 
+	public void SetNewColor (Color c) {
+		colors[setColorIndex] = c;
+		setColorIndex = Mathf.Min(setColorIndex + 1, colors.Length - 1);
+	}
 
 	public float Speed {
 		get { return speed; }
@@ -55,7 +73,15 @@ public class Player : Physics2DBody {
 			if (rigidbody2d.velocity.sqrMagnitude > 0.2f) {
 				FaceDirection(rigidbody2d.velocity);
 			}
-			
+
+
+			if (colorTimer.IsOffCooldown) {
+				colorTimer.Reset();
+				GetComponent<SpriteRenderer>().color = colors[colorIndex];
+				colorIndex++;
+				colorIndex = colorIndex == colors.Length ? 0 : colorIndex;
+
+			}
 		}
 	}
 	

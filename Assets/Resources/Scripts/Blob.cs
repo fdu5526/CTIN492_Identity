@@ -10,6 +10,7 @@ public class Blob : Physics2DBody {
 	GameObject player;
 	AudioSource[] audios;
 
+
 	// Use this for initialization
 	protected override void Awake () {
 		player = GameObject.Find("Player");
