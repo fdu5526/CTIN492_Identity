@@ -16,7 +16,7 @@ public class OtherBlobSpawner : MonoBehaviour {
 	}
 
 
-	float NewSpawnTime { get { return UnityEngine.Random.Range(3f, 7f); } }
+	float NewSpawnTime { get { return UnityEngine.Random.Range(6f, 10f); } }
 
 
 	void SpawnBlob () {

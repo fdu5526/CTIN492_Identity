@@ -8,12 +8,14 @@ public class Blob : Physics2DBody {
 
 	bool isBroken;
 	GameObject player;
+	AudioSource[] audios;
 
 	// Use this for initialization
 	protected override void Awake () {
 		player = GameObject.Find("Player");
 		joint2d = GetComponent<Joint2D>();
 		isBroken = false;
+		audios = GetComponents<AudioSource>();
 		base.Awake();
 	}
 
@@ -40,7 +42,7 @@ public class Blob : Physics2DBody {
 		// broken
 		if (joint2d == null && !isBroken) {
 			isBroken = true;
-			print("yay");
+			audios[(int)UnityEngine.Random.Range(0, audios.Length)].Play();
 		}
 	}
 }

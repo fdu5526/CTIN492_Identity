@@ -3,7 +3,9 @@ using System.Collections;
 
 public class Player : Physics2DBody {
 
-	float speed = 8f;
+	float speed = 4f;
+	float boostSpeed = 4f;
+
 	string[] inputStrings = {"w", "a", "s", "d"};
 	bool[] inputs;
 
@@ -13,6 +15,17 @@ public class Player : Physics2DBody {
 		inputs = new bool[inputStrings.Length];
 		disabled = false;
 		base.Awake();
+	}
+
+
+	public float Speed {
+		get { return speed; }
+		set {speed = value; }
+	}
+
+	public float Mass {
+		get { return rigidbody2d.mass; }
+		set { rigidbody2d.mass = value; }
 	}
 
 	// given vector, change facing direction to that way
