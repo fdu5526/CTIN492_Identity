@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Player : Physics2DBody {
 
-	float speed = 4f;
+	float speed = 8f;
 	string[] inputStrings = {"w", "a", "s", "d"};
 	bool[] inputs;
 
