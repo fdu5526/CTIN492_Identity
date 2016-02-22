@@ -21,10 +21,13 @@ public class Blob : Physics2DBody {
 
 	
 	void OnMouseDrag () {
-	 	Vector3 v3 = Input.mousePosition;
- 		v3.z = 10f;
- 		v3 = Camera.main.ScreenToWorldPoint(v3);
-		rigidbody2d.velocity = ((Vector2)v3 - (Vector2)rigidbody2d.position) * 7f;
+		if (!isBroken) {
+			Vector3 v3 = Input.mousePosition;
+	 		v3.z = 10f;
+	 		v3 = Camera.main.ScreenToWorldPoint(v3);
+			rigidbody2d.velocity = ((Vector2)v3 - (Vector2)rigidbody2d.position) * 7f;
+		}
+	 	
 	}
 
 	// given vector, change facing direction to that way
@@ -36,13 +39,19 @@ public class Blob : Physics2DBody {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		Vector2 d = player.transform.position - transform.position;
-		FaceDirection(d);
-
 		// broken
 		if (joint2d == null && !isBroken) {
 			isBroken = true;
-			audios[(int)UnityEngine.Random.Range(0, audios.Length)].Play();
+			audios[3].Stop();
+			audios[(int)UnityEngine.Random.Range(0, 3)].Play();
+			return;
+		}
+
+		if (!isBroken) {
+			float v = joint2d.reactionForce.magnitude/700f;
+			audios[3].volume = v < 0.2f ? 0f : v - 0.2f;
+			Vector2 d = player.transform.position - transform.position;
+			FaceDirection(d);
 		}
 	}
 }

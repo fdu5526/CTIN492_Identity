@@ -16,7 +16,7 @@ public class OtherBlobSpawner : MonoBehaviour {
 	}
 
 
-	float NewSpawnTime { get { return UnityEngine.Random.Range(6f, 10f); } }
+	float NewSpawnTime { get { return UnityEngine.Random.Range(4f, 8f); } }
 
 
 	void SpawnBlob () {
@@ -28,7 +28,7 @@ public class OtherBlobSpawner : MonoBehaviour {
 	void FixedUpdate () {
 		float x = player.transform.position.x;
 
-		if (spawnTimer.IsOffCooldown && Mathf.Abs(x - transform.position.x) < xThreshold) {
+		if (spawnTimer.IsOffCooldown && Mathf.Abs(x - transform.position.x) < xThreshold && x > 20f) {
 			spawnTimer.Reset();
 			SpawnBlob();
 			spawnTimer.CooldownTime = NewSpawnTime;
