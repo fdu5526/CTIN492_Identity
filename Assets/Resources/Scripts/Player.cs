@@ -1,24 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof (Rigidbody2D))]
-[RequireComponent (typeof (Collider2D))]
-public class Player : MonoBehaviour {
+public class Player : Physics2DBody {
 
 	float speed = 4f;
 	string[] inputStrings = {"w", "a", "s", "d"};
 	bool[] inputs;
 
 	bool disabled;
-	Rigidbody2D rigidbody2d;
-	Collider2D collider2d;
-
 	// Use this for initialization
-	void Awake () {
+	protected override void Awake () {
 		inputs = new bool[inputStrings.Length];
 		disabled = false;
-		rigidbody2d = GetComponent<Rigidbody2D>();
-		collider2d = GetComponent<Collider2D>();
+		base.Awake();
 	}
 
 	// given vector, change facing direction to that way
