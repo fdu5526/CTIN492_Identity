@@ -63,6 +63,14 @@ public class Player : Physics2DBody {
 		set { rigidbody2d.mass = value; }
 	}
 
+	public bool Disabled {
+		get { return disabled; }
+		set { 
+			disabled = value; 
+			rigidbody2d.velocity = Vector2.zero;
+		}
+	}
+
 	public void AddOrb (int amount) {
 		for (int i = 0; i < amount; i++) {
 			GameObject g = (GameObject)MonoBehaviour.Instantiate(Resources.Load("Prefabs/Blob"));
