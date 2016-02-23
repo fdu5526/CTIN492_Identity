@@ -10,6 +10,12 @@ public class OtherBlob : Physics2DBody {
 	protected override void Awake () {
 		speed = UnityEngine.Random.Range(1f, 3f);
 		base.Awake();
+
+		Transform[] t = transform.GetComponentsInChildren<Transform>();
+		int deleteCount = (int)UnityEngine.Random.Range(0f, 3f);
+		for (int i = 1; i < deleteCount + 1; i++) {
+			Destroy(t[i].gameObject);
+		}
 	}
 	
 	// Update is called once per frame

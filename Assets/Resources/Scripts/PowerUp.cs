@@ -4,7 +4,7 @@ using System.Collections;
 public class PowerUp : Physics2DBody {
 	
 
-	public enum PowerUpType { Speed, Mass };
+	public enum PowerUpType { Speed, Mass, BoostSpeed, OrbCount };
 	public PowerUpType type;
 	public float amount;
 
@@ -24,6 +24,12 @@ public class PowerUp : Physics2DBody {
 				break;
 			case PowerUpType.Mass:
 				player.Mass += amount / 2f;
+				break;
+			case PowerUpType.BoostSpeed:
+				player.BoostSpeed += amount;
+				break;
+			case PowerUpType.OrbCount:
+				player.AddOrb((int)amount);
 				break;
 		}
 		player.SetNewColor(GetComponent<SpriteRenderer>().color);

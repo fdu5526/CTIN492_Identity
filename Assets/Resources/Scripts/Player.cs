@@ -4,14 +4,16 @@ using System.Collections;
 public class Player : Physics2DBody {
 
 	float speed = 4f;
-	float boostSpeed = 4f;
+	float boostSpeed = 10f;
+	Timer boostTimer;
+	Timer boostCooldownTimer;
 
 	Color[] colors;
 	int colorIndex;
 	int setColorIndex;
 	Timer colorTimer;
 
-	string[] inputStrings = {"w", "a", "s", "d"};
+	string[] inputStrings = {"w", "a", "s", "d", "space"};
 	bool[] inputs;
 
 	bool disabled;
@@ -28,6 +30,9 @@ public class Player : Physics2DBody {
 		setColorIndex = 0;
 		colorTimer = new Timer(0.1f);
 
+		boostTimer = new Timer(0.2f);
+		boostCooldownTimer = new Timer(0.8f);
+
 		base.Awake();
 	}
 
@@ -38,12 +43,28 @@ public class Player : Physics2DBody {
 
 	public float Speed {
 		get { return speed; }
-		set {speed = value; }
+		set { 
+			boostSpeed = Mathf.Max(boostSpeed, value);
+			speed = value; 
+		}
+	}
+
+	public float BoostSpeed {
+		get { return boostSpeed; }
+		set { boostSpeed = value; }
 	}
 
 	public float Mass {
 		get { return rigidbody2d.mass; }
 		set { rigidbody2d.mass = value; }
+	}
+
+	public void AddOrb (int amount) {
+		for (int i = 0; i < amount; i++) {
+			GameObject g = (GameObject)MonoBehaviour.Instantiate(Resources.Load("Prefabs/Blob"));
+			g.transform.position = transform.position;
+			g.GetComponent<Joint2D>().connectedBody = rigidbody2d;
+		}
 	}
 
 	// given vector, change facing direction to that way
@@ -58,16 +79,25 @@ public class Player : Physics2DBody {
 		if (!disabled) {
 			float dx = 0f;
 			float dy = 0f;
+
+			// boost
+			if (inputs[4] && boostCooldownTimer.IsOffCooldown) {
+				boostTimer.Reset();
+				boostCooldownTimer.Reset();
+			}
+
+			float s = boostTimer.IsOffCooldown ? speed : boostSpeed;
+			//s = boostSpeed;
 			if (inputs[0]) {
-				dy = speed;
+				dy = s;
 			} else if (inputs[2]) {
-				dy = -speed;
+				dy = -s;
 			}
 
 			if (inputs[1]) {
-				dx = -speed;
+				dx = -s;
 			} else if (inputs[3]) {
-				dx = speed;
+				dx = s;
 			}
 			rigidbody2d.velocity = new Vector2(dx, dy);
 			if (rigidbody2d.velocity.sqrMagnitude > 0.2f) {
