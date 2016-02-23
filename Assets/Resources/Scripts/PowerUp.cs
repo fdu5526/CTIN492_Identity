@@ -13,7 +13,7 @@ public class PowerUp : Physics2DBody {
 
 	// Use this for initialization
 	protected override void Awake () {
-		player = GameObject.Find("Player").GetComponent<Player>();
+		player = GameObject.Find("PlayerSystem/Player").GetComponent<Player>();
 		base.Awake();
 	}
 	

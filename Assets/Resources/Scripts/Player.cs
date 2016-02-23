@@ -13,6 +13,8 @@ public class Player : Physics2DBody {
 	int setColorIndex;
 	Timer colorTimer;
 
+	AudioSource[] audios;
+
 	string[] inputStrings = {"w", "a", "s", "d", "space"};
 	bool[] inputs;
 
@@ -32,6 +34,8 @@ public class Player : Physics2DBody {
 
 		boostTimer = new Timer(0.2f);
 		boostCooldownTimer = new Timer(0.8f);
+
+		audios = GetComponents<AudioSource>();
 
 		base.Awake();
 	}
@@ -75,6 +79,15 @@ public class Player : Physics2DBody {
 	}
 
 
+	void OnCollisionEnter2D (Collision2D coll) {
+		int i = (int)UnityEngine.Random.Range(1, 4);
+
+		audios[i].volume = (coll.relativeVelocity.magnitude) / 10f;
+		audios[i].Play();
+
+	}
+
+
 	void FixedUpdate () {
 		if (!disabled) {
 			float dx = 0f;
@@ -84,6 +97,7 @@ public class Player : Physics2DBody {
 			if (inputs[4] && boostCooldownTimer.IsOffCooldown) {
 				boostTimer.Reset();
 				boostCooldownTimer.Reset();
+				audios[0].Play();
 			}
 
 			float s = boostTimer.IsOffCooldown ? speed : boostSpeed;

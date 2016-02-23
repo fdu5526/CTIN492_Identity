@@ -11,7 +11,7 @@ public class OtherBlobSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		player = GameObject.Find("Player");
+		player = GameObject.Find("PlayerSystem/Player");
 		spawnTimer = new Timer(NewSpawnTime);
 	}
 

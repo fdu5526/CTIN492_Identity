@@ -13,7 +13,7 @@ public class Blob : Physics2DBody {
 
 	// Use this for initialization
 	protected override void Awake () {
-		player = GameObject.Find("Player");
+		player = GameObject.Find("PlayerSystem/Player");
 		joint2d = GetComponent<Joint2D>();
 		isBroken = false;
 		audios = GetComponents<AudioSource>();

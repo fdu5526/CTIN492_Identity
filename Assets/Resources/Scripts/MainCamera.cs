@@ -7,7 +7,7 @@ public class MainCamera : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		player = GameObject.Find("Player").gameObject;
+		player = GameObject.Find("PlayerSystem/Player").gameObject;
 	}
 
 	public void SetNewPlayer (GameObject g) {
