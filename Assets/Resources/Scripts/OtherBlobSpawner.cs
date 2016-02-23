@@ -12,12 +12,13 @@ public class OtherBlobSpawner : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		player = GameObject.Find("PlayerSystem/Player");
-		spawnTimer = new Timer(NewSpawnTime);
+		spawnTimer = new Timer(inFrontOfPlayer ? NewFrontSpawnTime : NewBackSpawnTime);
 	}
 
 
-	float NewSpawnTime { get { return UnityEngine.Random.Range(4f, 8f); } }
+	float NewBackSpawnTime { get { return UnityEngine.Random.Range(2f, 4f); } }
 
+	float NewFrontSpawnTime { get { return UnityEngine.Random.Range(6f, 10f); } }
 
 	void SpawnBlob () {
 		GameObject g = (GameObject)MonoBehaviour.Instantiate(Resources.Load("Prefabs/OtherBlob"));
@@ -28,10 +29,14 @@ public class OtherBlobSpawner : MonoBehaviour {
 	void FixedUpdate () {
 		float x = player.transform.position.x;
 
-		if (spawnTimer.IsOffCooldown && Mathf.Abs(x - transform.position.x) < xThreshold && x > 20f) {
+		if (spawnTimer.IsOffCooldown && Mathf.Abs(x - transform.position.x) < xThreshold && transform.position.x > 3f) {
 			spawnTimer.Reset();
-			SpawnBlob();
-			spawnTimer.CooldownTime = NewSpawnTime;
+			spawnTimer.CooldownTime = inFrontOfPlayer ? NewFrontSpawnTime : NewBackSpawnTime;
+
+			if (GameObject.FindGameObjectsWithTag("OtherBlob").Length < 20) {
+				SpawnBlob();
+			}
+			
 		}
 		
 		if (inFrontOfPlayer) {
