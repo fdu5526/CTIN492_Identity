@@ -12,7 +12,7 @@ public class PowerUp : Physics2DBody {
 	Player player;
 
 	// Use this for initialization
-	void Awake () {
+	protected override void Awake () {
 		player = GameObject.Find("Player").GetComponent<Player>();
 		base.Awake();
 	}
@@ -23,13 +23,13 @@ public class PowerUp : Physics2DBody {
 				player.Speed += amount;
 				break;
 			case PowerUpType.Mass:
-				player.Mass += amount / 2f;
+				player.Mass += amount;
 				break;
 			case PowerUpType.BoostSpeed:
 				player.BoostSpeed += amount;
 				break;
 			case PowerUpType.OrbCount:
-				player.AddOrb((int)amount);
+				player.AddOrb((int)	amount);
 				break;
 		}
 		player.SetNewColor(GetComponent<SpriteRenderer>().color);

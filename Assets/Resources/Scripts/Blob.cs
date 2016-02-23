@@ -45,6 +45,8 @@ public class Blob : Physics2DBody {
 			isBroken = true;
 			audios[3].Stop();
 			audios[(int)UnityEngine.Random.Range(0, 3)].Play();
+			this.gameObject.layer = 0;
+			transform.Find("Particle").GetComponent<ParticleSystem>().Play();
 			return;
 		}
 

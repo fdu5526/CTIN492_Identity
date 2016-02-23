@@ -22,13 +22,13 @@ public class Player : Physics2DBody {
 		inputs = new bool[inputStrings.Length];
 		disabled = false;
 
-		colors = new Color[10];
+		colors = new Color[5];
 		for (int i = 0; i < colors.Length; i++) {
 			colors[i] = GetComponent<SpriteRenderer>().color;
 		}
 		colorIndex = 0;
 		setColorIndex = 0;
-		colorTimer = new Timer(0.1f);
+		colorTimer = new Timer(0.2f);
 
 		boostTimer = new Timer(0.2f);
 		boostCooldownTimer = new Timer(0.8f);
